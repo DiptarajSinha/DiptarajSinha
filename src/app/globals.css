@@ -1,26 +1,54 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html {
+  scroll-padding-top: 80px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Netflix-style avatar pop-in */
+@keyframes avatarPopIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.avatar-pop {
+  animation: avatarPopIn 0.4s ease forwards;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.allow-pop-out {
+  overflow-x: visible;
+  overflow-y: visible;
+  z-index: 10;
+}
+
+/* --- FORCE FONT CLASSES --- */
+/* We use !important to ensure these override the default body font */
+.font-recruiter {
+  font-family: var(--font-recruiter), sans-serif !important;
+}
+
+.font-adventurer {
+  font-family: var(--font-adventurer), cursive !important;
+}
+
+.font-stalker {
+  font-family: var(--font-stalker), monospace !important;
 }
