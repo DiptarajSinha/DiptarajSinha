@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function LoadingPage() {
+function LoadingContent() {
   const [message, setMessage] = useState('Loading...');
-  // Default states for styling
   const [fontClass, setFontClass] = useState('font-sans'); 
   const [themeColor, setThemeColor] = useState('text-white border-white');
   
@@ -25,25 +24,22 @@ export default function LoadingPage() {
       finalRole = roleFromStorage;
     }
 
-    // 1. Define Message Map
     const messageMap: Record<string, string> = {
       Recruiter: 'Polishing my resume for you...',
-      Stalker: 'ACCESSING SECURE SERVER...', // Changed to fit the "Hacker" vibe better
+      Stalker: 'ACCESSING SECURE SERVER...',
       Adventurer: 'Warming up the engines...',
     };
 
-    // 2. Set Message
     setMessage(messageMap[finalRole || ''] || 'Loading...');
 
-    // 3. Apply Fonts and Colors based on Role
     if (finalRole === 'Stalker') {
-      setFontClass('font-stalker tracking-widest uppercase'); // Hacker font
+      setFontClass('font-stalker tracking-widest uppercase');
       setThemeColor('text-red-500 border-red-500');
     } else if (finalRole === 'Adventurer') {
-      setFontClass('font-adventurer tracking-wide'); // Adventure font
+      setFontClass('font-adventurer tracking-wide');
       setThemeColor('text-yellow-500 border-yellow-500');
     } else {
-      setFontClass('font-sans tracking-normal'); // Default clean font
+      setFontClass('font-sans tracking-normal');
       setThemeColor('text-white border-white');
     }
 
@@ -55,20 +51,20 @@ export default function LoadingPage() {
   }, [router, searchParams]);
 
   return (
-    // Added 'px-6' for mobile padding so text doesn't touch edges
     <main className="min-h-screen flex flex-col items-center justify-center bg-black px-6 text-center">
-      
-      {/* - responsive text size: text-xl (mobile) -> text-3xl (desktop) 
-         - dynamic font class and text color 
-      */}
       <div className={`text-xl md:text-3xl mb-8 font-bold animate-pulse ${fontClass} ${themeColor.split(' ')[0]}`}>
         {message}
       </div>
 
-      {/* - Loader matches the theme color automatically
-         - Responsive size: w-12 (mobile) -> w-16 (desktop)
-      */}
       <div className={`w-12 h-12 md:w-16 md:h-16 border-4 border-t-transparent rounded-full animate-spin ${themeColor.split(' ')[1]}`}></div>
     </main>
+  );
+}
+
+export default function LoadingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black" />}>
+      <LoadingContent />
+    </Suspense>
   );
 }
