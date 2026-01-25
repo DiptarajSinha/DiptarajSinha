@@ -54,7 +54,7 @@ A dark, terminal-heavy simulation for those who like to "dig deeper."
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/DiptarajSinha/your-repo-name.git](https://github.com/DiptarajSinha/your-repo-name.git)
+   git clone [https://github.com/DiptarajSinha/DiptarajSinha.git](https://github.com/DiptarajSinha/DiptarajSinha.git)
    ```
 2. **Install dependencies:**
    ```bash
@@ -74,8 +74,8 @@ npm run build
 
 ## 📜 Discovery Log
 
-"Every line of code is a footprint in the digital sand. Some are meant to be followed, others are meant to be hidden." — Explorer DS
+> *"Every line of code is a footprint in the digital sand. Some are meant to be followed, others are meant to be hidden."* — **Explorer DS**
 
 ---
 
-Developed with 💻 and ☕ by Diptaraj Sinha
+**Developed with 💻 and ☕ by [Diptaraj Sinha](https://github.com/DiptarajSinha)**
