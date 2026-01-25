@@ -490,7 +490,7 @@ export default function HomePage() {
               <p className="text-lg md:text-xl text-gray-300 mb-4">
                 CSE Final year student with passion for Gen AI and high-performance Frontend Engineering.
               </p>
-              <a href="/CV - Diptaraj Sinha.pdf" download className={`${buttonBase} bg-red-600 text-white hover:bg-red-500`}>
+              <a href="/cv-diptaraj-sinha.pdf" download className={`${buttonBase} bg-red-600 text-white hover:bg-red-500`}>
                 Download CV
               </a>
             </div>
