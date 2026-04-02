@@ -14,6 +14,17 @@ export type Project = {
 
 export const recruiterProjects: Project[] = [
   {
+    title: 'TransitPay',
+    description: 'A comprehensive transit ticketing Super App featuring biometric "silent login", real-time ticket verification for conductors, offline-first Isar database support, and secure wallet payments via Stripe.',
+    techStack: ['Flutter', 'Dart', 'Supabase', 'Riverpod', 'Isar DB', 'Stripe API', 'Local Auth'],
+    github: 'https://github.com/DiptarajSinha/TransitPay',
+    demo: 'https://drive.google.com/file/d/1f2KJcgUOOVMFt3ZEn4SKhclu3Pk3hIpO/view?usp=sharing', 
+    backgroundImage: '/bg/project-transitpay.png',
+    role: 'solo',
+    featured: true,
+    tags: ['Mobile App', 'Fintech', 'Full Stack', 'Offline-First'],   
+  },
+  {
     title: 'AI Weather Hub',
     description: 'A sleek weather web-app powered by OpenWeather API and Gemini AI that provides real-time weather updates, interactive AI chatbot assistance, and creative weather-appropriate activity suggestions with glassmorphism UI design.',
     techStack: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript (ES6+)', 'OpenWeather API', 'Gemini AI API', 'Responsive Design'],
