@@ -25,7 +25,7 @@ export const recruiterProjects: Project[] = [
     tags: ['Mobile App', 'Fintech', 'Full Stack', 'Offline-First'],   
   },
   {
-    title: 'Cloud-Persistent RAG Pipeline — “Ask Your Docs”',
+    title: 'Cloud-Persistent RAG Pipeline',
     description: 'AI-powered document assistant using vector search and multi-LLM fallback. Upload PDFs and ask questions directly — no more scrolling through 1,000-page files!',
     techStack: ['FastAPI', 'Supabase (pgvector)', 'Semantic Search', 'Gemini Embeddings', 'Docker', 'PostgreSQL', 'OpenAI', 'Cohere', 'pypdf'],
     github: 'https://github.com/DiptarajSinha/rag-pipeline',
