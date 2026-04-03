@@ -27,7 +27,7 @@ export const recruiterProjects: Project[] = [
   {
     title: 'Cloud-Persistent RAG Pipeline — “Ask Your Docs”',
     description: 'AI-powered document assistant using vector search and multi-LLM fallback. Upload PDFs and ask questions directly — no more scrolling through 1,000-page files!',
-    techStack: ['FastAPI', 'Supabase (pgvector)', 'Google Gemini', 'Gemini Embeddings', 'Docker', 'PostgreSQL', 'OpenAI', 'Cohere', 'pypdf'],
+    techStack: ['FastAPI', 'Supabase (pgvector)', 'Semantic Search', 'Gemini Embeddings', 'Docker', 'PostgreSQL', 'OpenAI', 'Cohere', 'pypdf'],
     github: 'https://github.com/DiptarajSinha/rag-pipeline',
     demo: 'https://diptaraj-rag-pipeline-api.hf.space/docs',
     backgroundImage: '/bg/project-rag.png',
