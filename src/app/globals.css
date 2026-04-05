@@ -52,3 +52,22 @@ html {
 .font-stalker {
   font-family: var(--font-stalker), monospace !important;
 }
+
+/* Hacker Scanline Animation */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+}
+
+@keyframes snake-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-snake-border {
+  animation: snake-rotate 3s linear infinite;
+}

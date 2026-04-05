@@ -56,7 +56,7 @@ export const AdventurerCarousel: React.FC<any> = ({ id, title, description, item
                 key={item.id}
                 whileHover={{ scale: 1.25, zIndex: 40 }}
                 onClick={() => onItemClick(item)}
-                className="min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-transparent hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 cursor-pointer"
+                className={`min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-white/10 bg-clip-padding hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 cursor-pointer`}
                 style={{
                   backgroundImage: item.backgroundImage ? `url(${item.backgroundImage})` : 'none',
                   backgroundSize: 'cover',

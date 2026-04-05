@@ -75,6 +75,16 @@ export default function HomePage() {
   
   const [selectedGame, setSelectedGame] = useState<GameItem | null>(null);
   const [isGameModalOpen, setIsGameModalOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)'); // lg breakpoint
+    setIsDesktop(mediaQuery.matches);
+    
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
   
   const getTime = () => {
     const now = new Date();
@@ -263,16 +273,16 @@ export default function HomePage() {
       <TypewriterStalker />
       }
     </h2>
-      <div className="relative w-full group">
+      <div className="relative w-full group/carousel">
         <button
           onClick={() => scroll('left')}
-          className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 z-50 bg-zinc-700 hover:bg-zinc-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 z-50 bg-zinc-700 hover:bg-zinc-600 text-white p-2 rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300"
         >
           <FaChevronLeft />
         </button>
         <div
           ref={scrollRef}
-          className="relative z-0 flex space-x-6 overflow-x-scroll no-scrollbar px-4 md:px-12 py-4"
+          className="relative z-0 flex space-x-6 overflow-x-scroll no-scrollbar px-4 md:px-12 py-8"
         >
           {topPicksByRole[role]?.map((item, i) => {
           const bg = topPickBackgrounds[role]?.[i % topPickBackgrounds[role].length];
@@ -282,19 +292,99 @@ export default function HomePage() {
                             role === 'Stalker' && item === 'Follow me' ? 'follow-me' :
                             role === 'Adventurer' && item === 'Projects' ? 'projects-adventurer' : 
                             itemSlug;
+          
+          const recruiterCTAs: Record<string, string> = {
+            "Skills": "Analyze Tech Stack",
+            "Experience": "Review Career Milestones",
+            "Projects": "Inspect Project Portfolio",
+            "Certifications": "Verify Credentials",
+            "Education": "Check Academic History",
+            "Hire Me": "Initiate Contact"
+          };
+          
+          const adventurerCTAs: Record<string, string> = {
+            "Projects": "Explore the Log",
+            "Unfinished but Interesting": "Analyze Drafts",
+            "Achievements": "Inspect Trophies",
+            "Tech Stack": "Check the Core",
+            "Blog": "Read Entries",
+            "\"What If\" Playground": "Run Simulation",
+            "Tools I Built for Myself": "Access Internal Tools",
+            "Weird UX Demos": "Break the UI",
+            "The Arcade": "Initialize Play",
+            "Connect with Me": "Signal Received"
+          };
+
+          const stalkerCTAs: Record<string, string> = {
+            "Suspicious Activity": "ANALYZE BREACH",
+            "Logs": "DECRYPT SOURCE",
+            "Secrets": "BYPASS ENCRYPTION",
+            "Unknown Projects": "EXECUTE PAYLOAD",
+            "Dark Mode": "GO INVISIBLE",
+            "Classified": "ACCESS RESTRICTED",
+            "Surveillance Network": "PING TARGETS",
+            "Mind Games": "INITIALIZE OVERRIDE",
+            "Follow me": "TRACE SIGNAL"
+          };
+          
+          const activeCTAs = role === 'Recruiter' ? recruiterCTAs : role === 'Adventurer' ? adventurerCTAs : stalkerCTAs;
+          const isStalker = role === 'Stalker';
+
           return (
-              <div key={item} onClick={() => sectionId === 'contact-me' ? setShowContact(true) : handleScrollToSection(sectionId)} className="cursor-pointer">
+              <div key={item} onClick={() => sectionId === 'contact-me' ? setShowContact(true) : handleScrollToSection(sectionId)} className="cursor-pointer group relative hover:z-50">
                   <motion.div
-                      whileHover={{ scale: 1.25, zIndex: 40 }}
-                      className="min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-transparent hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300"
-                      style={{
-                      backgroundImage: `url(${bg})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      }}
+                      whileHover={isDesktop ? (isStalker ? { scale: 1.15, x: [0, -2, 2, -1, 1, 0], transition: { duration: 0.2, repeat: Infinity } } : { scale: 1.4, zIndex: 50 }) : { scale: 1.05 }}
+                      className={`min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 ${
+                        isStalker ? 'border-transparent group-hover:border-cyan-500/50' : 'border-white/10'
+                      } ${
+                        role === 'Recruiter' ? 'hover:border-red-600 hover:drop-shadow-[0_0_25px_#ff0000aa]' : 
+                        role === 'Adventurer' ? 'hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa]' : ''
+                      } transition-all duration-300`}
                   >
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center p-2 text-center">
-                        <span className="text-white text-lg font-semibold">{item}</span>
+                      {/* Stalker Snake Border Effect */}
+                      {isStalker && isDesktop && (
+                        <div className="absolute inset-0 z-30 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_300deg,#06b6d4_360deg)] animate-snake-border" />
+                        </div>
+                      )}
+
+                      <div 
+                          className={`absolute inset-0 transition-all duration-500 ${!isStalker && isDesktop ? 'blur-md group-hover:blur-none' : ''}`}
+                          style={{
+                              backgroundImage: `url(${bg})`,
+                              backgroundSize: '100% 100%',
+                              backgroundPosition: 'center',
+                          }}
+                      />
+                      
+                      {isStalker && isDesktop && (
+                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 z-20 overflow-hidden">
+                          <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan" style={{ animationDuration: '3s' }} />
+                        </div>
+                      )}
+
+                      <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center p-2 text-center overflow-hidden z-10 transition-colors duration-500 group-hover:bg-black/10">
+                        {/* Top and Bottom Shadow Gradients for readability - No Blur */}
+                        {!isStalker && isDesktop && (
+                          <>
+                            <div className="absolute top-0 left-0 right-0 h-[30%] bg-gradient-to-b from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
+                            <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
+                          </>
+                        )}
+                        
+                        <span className={`text-white text-lg font-semibold drop-shadow-[0_2px_8px_black] transition-all duration-500 z-40 
+                          ${!isStalker && isDesktop ? 'group-hover:translate-y-[-30px] group-hover:scale-90' : ''}
+                          ${isStalker ? 'font-mono text-cyan-500 group-hover:text-cyan-300' : ''}
+                        `}>{item}</span>
+                        
+                        {isDesktop && activeCTAs[item] && (
+                          <span className={`absolute bottom-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest drop-shadow-[0_2px_8px_black] opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-40 whitespace-nowrap
+                            ${!isStalker ? 'bg-white/10 backdrop-blur-md border border-white/20' : 'bg-cyan-900/40 border border-cyan-500/50 font-mono text-cyan-400 group-hover:animate-pulse shadow-[0_0_15px_rgba(6,182,212,0.3)]'}
+                            ${role === 'Recruiter' ? 'text-red-500' : 'text-white'}
+                          `}>
+                            {activeCTAs[item]}
+                          </span>
+                        )}
                       </div>
                   </motion.div>
               </div>
@@ -303,7 +393,7 @@ export default function HomePage() {
         </div>
         <button
           onClick={() => scroll('right')}
-          className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 z-50 bg-zinc-700 hover:bg-zinc-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 z-50 bg-zinc-700 hover:bg-zinc-600 text-white p-2 rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300"
         >
           <FaChevronRight />
         </button>
@@ -328,7 +418,9 @@ export default function HomePage() {
           <AnimatedCard key={project.title} delay={i * 0.1}>
             <motion.div
               whileHover={{ scale: 1.1, zIndex: 55 }}
-              className="relative min-w-[280px] md:min-w-[320px] h-[220px] rounded-xl p-5 border-4 border-transparent hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 flex flex-col justify-between overflow-hidden"
+              className={`relative min-w-[280px] md:min-w-[320px] h-[220px] rounded-xl p-5 border-4 border-white/10 bg-clip-padding ${
+                role === 'Recruiter' ? 'hover:border-red-600 hover:drop-shadow-[0_0_25px_#ff0000aa]' : 'hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa]'
+              } transition-all duration-300 flex flex-col justify-between overflow-hidden`}
               style={{
                 backgroundImage: `url(${project.backgroundImage})`,
                 backgroundSize: 'cover',
@@ -1146,7 +1238,7 @@ export default function HomePage() {
                         className="bg-zinc-900 border border-red-800/50 rounded-lg p-6 h-48 flex flex-col justify-center items-center text-center transition-all duration-300 cursor-pointer font-stalker hover:border-pink-500"
                       >
                         <a
-                          href="https://instagram.com/__diptooo__"
+                          href="https://instagram.com/your.diptaraj"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex flex-col items-center w-full"

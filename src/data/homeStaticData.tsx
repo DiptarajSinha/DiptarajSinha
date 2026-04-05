@@ -1,16 +1,22 @@
-import { SiNextdotjs, SiTypescript, SiJavascript, SiReact, SiNodedotjs, SiPython, SiPostgresql, SiTailwindcss, SiVercel } from "react-icons/si";
+import { SiNextdotjs, SiTypescript, SiJavascript, SiReact, SiNodedotjs, SiPython, SiPostgresql, SiTailwindcss, SiVercel, SiC, SiCplusplus, SiHtml5 } from "react-icons/si";
 import { TbBrandCSharp } from "react-icons/tb";
+import { FaJava, FaDatabase } from "react-icons/fa";
 
 // --- DATA CONSTANTS ---
 
 export const skillsData = [
   { name: 'Python', icon: <SiPython size={48} />, bg: 'from-blue-500/10 to-zinc-900' },
   { name: 'React', icon: <SiReact size={48} />, bg: 'from-cyan-400/10 to-zinc-900' },
-  { name: 'Next.js', icon: <SiNextdotjs size={48} />, bg: 'from-white/10 to-zinc-900' },
+  { name: 'HTML', icon: <SiHtml5 size={48} />, bg: 'from-orange-600/10 to-zinc-900' },
+  { name: 'Tailwind CSS', icon: <SiTailwindcss size={48} />, bg: 'from-sky-400/10 to-zinc-900' },
   { name: 'JavaScript', icon: <SiJavascript size={48} />, bg: 'from-yellow-400/10 to-zinc-900' },
+  { name: 'Next.js', icon: <SiNextdotjs size={48} />, bg: 'from-white/10 to-zinc-900' },
+  { name: 'Java', icon: <FaJava size={48} />, bg: 'from-orange-500/10 to-zinc-900' },
+  { name: 'C', icon: <SiC size={48} />, bg: 'from-blue-600/10 to-zinc-900' },
+  { name: 'C++', icon: <SiCplusplus size={48} />, bg: 'from-blue-700/10 to-zinc-900' },
+  { name: 'SQL', icon: <FaDatabase size={48} />, bg: 'from-indigo-400/10 to-zinc-900' },
   { name: 'TypeScript', icon: <TbBrandCSharp size={48} />, bg: 'from-blue-400/10 to-zinc-900' },
   { name: 'Node.js', icon: <SiNodedotjs size={48} />, bg: 'from-green-400/10 to-zinc-900' },
-  { name: 'Tailwind CSS', icon: <SiTailwindcss size={48} />, bg: 'from-sky-400/10 to-zinc-900' },
 ];
 
 export const certificationsData = [
