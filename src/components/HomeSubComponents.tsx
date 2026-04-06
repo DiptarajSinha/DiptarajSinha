@@ -26,7 +26,7 @@ export const SkillCard = ({ name, icon, bg }: { name: string, icon: React.ReactN
 // --- ADVENTURER COMPONENTS ---
 
 // --- Card Component for better local state management ---
-const AdventurerCard = ({ item, index, onItemClick, hideCardImage }: { item: any, index: number, onItemClick: (item: any) => void, hideCardImage?: boolean }) => {
+const AdventurerCard = ({ item, index, onItemClick, hideCardImage, isPriority }: { item: any, index: number, onItemClick: (item: any) => void, hideCardImage?: boolean, isPriority?: boolean }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
@@ -42,8 +42,10 @@ const AdventurerCard = ({ item, index, onItemClick, hideCardImage }: { item: any
             src={item.backgroundImage}
             alt={item.title}
             fill
+            sizes="250px"
+            quality={60}
             className={`object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-            priority={index < 4}
+            priority={isPriority && index < 4}
             onLoad={() => setIsLoaded(true)}
           />
         </>
@@ -69,7 +71,7 @@ const AdventurerCard = ({ item, index, onItemClick, hideCardImage }: { item: any
   );
 };
 
-export const AdventurerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hideCardImage }) => {
+export const AdventurerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hideCardImage, isPriority }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -103,6 +105,7 @@ export const AdventurerCarousel: React.FC<any> = ({ id, title, description, item
                 index={index} 
                 onItemClick={onItemClick} 
                 hideCardImage={hideCardImage} 
+                isPriority={isPriority}
               />
             ))}
           </div>
@@ -346,7 +349,7 @@ export const TypingTerminal: React.FC<any> = ({ onComplete }) => {
   );
 };
 
-const StalkerCard = ({ item, index, onItemClick, hoverEffect, getHoverEffectClasses }: { item: any, index: number, onItemClick: (item: any) => void, hoverEffect: string, getHoverEffectClasses: (effect: string) => string }) => {
+const StalkerCard = ({ item, index, onItemClick, hoverEffect, getHoverEffectClasses, isPriority }: { item: any, index: number, onItemClick: (item: any) => void, hoverEffect: string, getHoverEffectClasses: (effect: string) => string, isPriority?: boolean }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
@@ -362,8 +365,10 @@ const StalkerCard = ({ item, index, onItemClick, hoverEffect, getHoverEffectClas
             src={item.backgroundImage}
             alt={item.title}
             fill
+            sizes="300px"
+            quality={60}
             className={`object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-            priority={index < 4}
+            priority={isPriority && index < 4}
             onLoad={() => setIsLoaded(true)}
           />
         </>
@@ -402,7 +407,7 @@ const StalkerCard = ({ item, index, onItemClick, hoverEffect, getHoverEffectClas
   );
 };
 
-export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hoverEffect }) => {
+export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hoverEffect, isPriority }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -456,6 +461,7 @@ export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, 
                 onItemClick={onItemClick} 
                 hoverEffect={hoverEffect} 
                 getHoverEffectClasses={getHoverEffectClasses} 
+                isPriority={isPriority}
               />
             ))}
           </div>

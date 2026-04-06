@@ -187,39 +187,34 @@ export const recruiterProjects: Project[] = [
 ];
 
 export const adventurerProjects = [
-  {
-    title: 'Project Alpha: Procedural Terrain',
-    description: 'An experiment in generating infinite, procedural 2D terrain using Perlin noise. What secrets could be hidden in a world that never ends? Currently a work-in-progress.',
-    backgroundImage: '/bg/adventurer-project-alpha.jpg',
-    details: '...',
-    tech: ['JavaScript', 'p5.js'],
-  },
-  {
-    title: 'Project Beta: The Failed Chrono-Trigger',
-    description: 'A failed but fascinating attempt at creating a version control system for creative writing, allowing writers to explore "what if" branches of their story. The complexity spiraled, but the core idea remains a worthy challenge.',
-    backgroundImage: '/bg/adventurer-project-beta.jpg',
-    details: '...',
-    tech: ['Node.js', 'React', 'SQLite'],
-  },
-  {
-    title: 'Project Gamma: AI Storyteller',
-    description: 'A web app that uses a fine-tuned LLM to co-author short stories with the user. It can suggest plot twists, character names, or even write entire paragraphs based on a prompt.',
-    backgroundImage: '/bg/adventurer-project-gamma.jpg',
-    details: '...',
-    tech: ['Next.js', 'TypeScript', 'Python', 'Hugging Face'],
-  },
-  {
-    title: 'Project Delta: Glitch Art Generator',
-    description: 'A tool that intentionally corrupts image data to create unpredictable and beautiful glitch art. An exploration of how breaking things can lead to artistic discovery.',
-    backgroundImage: '/bg/adventurer-project-delta.jpg',
-    details: '...',
-    tech: ['React', 'Canvas API'],
-  },
-  {
-    title: 'Project Epsilon: Self-Sorting Bookshelf',
-    description: 'A command-line tool that organizes my digital ebook library based on genre, author, and even sentiment analysis of the book description. A personal quest for perfect order.',
-    backgroundImage: '/bg/adventurer-project-epsilon.jpg',
-    details: '...',
-    tech: ['Python', 'NLTK'],
-  },
+  {
+    title: 'Project Alpha: Procedural Terrain',
+    description: 'An experiment in generating infinite, procedural 2D terrain using Perlin noise. What secrets could be hidden in a world that never ends? Currently a work-in-progress.',
+    details: '...',
+    tech: ['JavaScript', 'p5.js'],
+  },
+  {
+    title: 'Project Beta: The Failed Chrono-Trigger',
+    description: 'A failed but fascinating attempt at creating a version control system for creative writing, allowing writers to explore "what if" branches of their story. The complexity spiraled, but the core idea remains a worthy challenge.',
+    details: '...',
+    tech: ['Node.js', 'React', 'SQLite'],
+  },
+  {
+    title: 'Project Gamma: AI Storyteller',
+    description: 'A web app that uses a fine-tuned LLM to co-author short stories with the user. It can suggest plot twists, character names, or even write entire paragraphs based on a prompt.',
+    details: '...',
+    tech: ['Next.js', 'TypeScript', 'Python', 'Hugging Face'],
+  },
+  {
+    title: 'Project Delta: Glitch Art Generator',
+    description: 'A tool that intentionally corrupts image data to create unpredictable and beautiful glitch art. An exploration of how breaking things can lead to artistic discovery.',
+    details: '...',
+    tech: ['React', 'Canvas API'],
+  },
+  {
+    title: 'Project Epsilon: Self-Sorting Bookshelf',
+    description: 'A command-line tool that organizes my digital ebook library based on genre, author, and even sentiment analysis of the book description. A personal quest for perfect order.',
+    details: '...',
+    tech: ['Python', 'NLTK'],
+  },
 ];

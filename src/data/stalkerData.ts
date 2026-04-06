@@ -28,7 +28,6 @@ export const stalkerSectionCards = {
       accessLevel: 'restricted' as const,
       lastAccessed: '2 minutes ago',
       threatLevel: 'high' as const,
-      backgroundImage: '/bg/stalker-1.jpg',
       category: 'suspicious' as const,
     },
     {
@@ -70,7 +69,6 @@ export const stalkerSectionCards = {
       accessLevel: 'restricted' as const,
       lastAccessed: '5 minutes ago',
       threatLevel: 'medium' as const,
-      backgroundImage: '/bg/stalker-2.jpg',
       category: 'logs' as const,
     },
     {
@@ -110,7 +108,6 @@ export const stalkerSectionCards = {
       accessLevel: 'top-secret' as const,
       lastAccessed: 'Classified',
       threatLevel: 'critical' as const,
-      backgroundImage: '/bg/stalker-3.jpg',
       category: 'secrets' as const,
     },
     {
@@ -150,7 +147,6 @@ export const stalkerSectionCards = {
       accessLevel: 'top-secret' as const,
       lastAccessed: 'Unknown',
       threatLevel: 'critical' as const,
-      backgroundImage: '/bg/stalker-4.jpg',
       category: 'unknown' as const,
     },
     {
@@ -190,7 +186,6 @@ export const stalkerSectionCards = {
       accessLevel: 'restricted' as const,
       lastAccessed: '12 minutes ago',
       threatLevel: 'medium' as const,
-      backgroundImage: '/bg/stalker-5.jpg',
       category: 'darkmode' as const,
     },
     {
@@ -230,7 +225,6 @@ export const stalkerSectionCards = {
       accessLevel: 'top-secret' as const,
       lastAccessed: '[CLASSIFIED]',
       threatLevel: 'critical' as const,
-      backgroundImage: '/bg/stalker-6.jpg',
       category: 'classified' as const,
     },
     {
