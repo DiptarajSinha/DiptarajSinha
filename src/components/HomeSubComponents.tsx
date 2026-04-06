@@ -24,7 +24,7 @@ export const SkillCard = ({ name, icon, bg }: { name: string, icon: React.ReactN
 
 // --- ADVENTURER COMPONENTS ---
 
-export const AdventurerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick }) => {
+export const AdventurerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hideCardImage }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -58,10 +58,10 @@ export const AdventurerCarousel: React.FC<any> = ({ id, title, description, item
                 onClick={() => onItemClick(item)}
                 className={`min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-white/10 bg-clip-padding hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 cursor-pointer`}
                 style={{
-                  backgroundImage: item.backgroundImage ? `url(${item.backgroundImage})` : 'none',
+                  backgroundImage: (item.backgroundImage && !hideCardImage) ? `url(${item.backgroundImage})` : 'none',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  backgroundColor: !item.backgroundImage ? '#18181b' : 'transparent',
+                  backgroundColor: (!item.backgroundImage || hideCardImage) ? '#18181b' : 'transparent',
                 }}
               >
                 <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-center">
@@ -111,7 +111,7 @@ export const AdventurerModal: React.FC<any> = ({ item, onClose }) => {
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
-          className="bg-zinc-900 rounded-xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-zinc-700 relative"
+          className="bg-zinc-900 rounded-xl shadow-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-zinc-700 relative"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -123,71 +123,93 @@ export const AdventurerModal: React.FC<any> = ({ item, onClose }) => {
             </svg>
           </button>
 
-          <div className="p-8">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">{item.title.charAt(0)}</span>
-              </div>
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-white mb-2">{item.title}</h2>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {item.technologies.map((tech: string) => (
-                    <span key={tech} className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">
-                      {tech}
-                    </span>
-                  ))}
+          <div className="flex flex-col lg:flex-row h-full">
+            {/* Left side: Image */}
+            {(item.backgroundImage || item.image) && (
+              <div className="w-full lg:w-1/2 bg-zinc-950 flex items-center justify-center p-4 min-h-[300px] lg:min-h-0">
+                <div className="relative w-full h-full min-h-[300px] lg:min-h-[400px]">
+                  <Image
+                    src={item.backgroundImage || item.image}
+                    alt={item.title}
+                    fill
+                    className="object-contain"
+                    priority
+                  />
                 </div>
-                {(item.status === 'completed' || item.status === 'in-progress') && (
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      item.status === 'completed'
-                        ? 'bg-green-600 text-white'
-                        : 'bg-yellow-600 text-white'
-                    }`}
-                  >
-                    {item.status === 'completed' ? 'Completed' : 'In Progress'}
-                  </span>
-                )}
               </div>
-            </div>
+            )}
 
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Description</h3>
-                <p className="text-gray-300 leading-relaxed">{item.detailedDescription}</p>
+            {/* Right side: Content */}
+            <div className={`p-8 ${ (item.backgroundImage || item.image) ? 'lg:w-1/2' : 'w-full' }`}>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl font-bold text-white">{item.title.charAt(0)}</span>
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-2xl font-bold text-white mb-2">{item.title}</h2>
+                  {item.technologies && item.technologies.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {item.technologies.map((tech: string) => (
+                        <span key={tech} className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {(item.status === 'completed' || item.status === 'in-progress') && (
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        item.status === 'completed'
+                          ? 'bg-green-600 text-white'
+                          : 'bg-yellow-600 text-white'
+                      }`}
+                    >
+                      {item.status === 'completed' ? 'Completed' : 'In Progress'}
+                    </span>
+                  )}
+                </div>
               </div>
 
-              <div className="flex gap-4">
-                {item.certificateUrl && (
-                  <a
-                    href={item.certificateUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
-                  >
-                    View Certificate
-                  </a>
-                )}
-                {item.liveUrl && (
-                  <a
-                    href={item.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
-                  >
-                    Live Demo
-                  </a>
-                )}
-                {item.githubUrl && (
-                  <a
-                    href={item.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg font-semibold transition-colors"
-                  >
-                    Source Code
-                  </a>
-                )}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-3">Description</h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    {item.details || item.detailedDescription || item.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-4">
+                  {(item.certificateUrl || item.link) && (
+                    <a
+                      href={item.certificateUrl || item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex-1 text-center sm:flex-none"
+                    >
+                      {item.certificateUrl ? 'View Certificate' : 'Visit Site'}
+                    </a>
+                  )}
+                  {item.liveUrl && (
+                    <a
+                      href={item.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex-1 text-center sm:flex-none"
+                    >
+                      Live Demo
+                    </a>
+                  )}
+                  {(item.githubUrl || item.sourceLink) && (
+                    <a
+                      href={item.githubUrl || item.sourceLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg font-semibold transition-colors flex-1 text-center sm:flex-none"
+                    >
+                      Source Code
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>

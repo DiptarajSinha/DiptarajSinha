@@ -22,7 +22,8 @@ export const adventurerSectionCards = {
       details: 'Explores a non-linear browsing experience where websites are nodes in a secure network rather than simple tabs. Implements real-time visual feedback for tracker detection.',
       location: 'The Encrypted Vaults',
       date: 'Discovery Pending',
-      status: 'concept'
+      status: 'concept',
+      backgroundImage: '/bg/ghost-protocol.png',
     },
     {
       id: 'haptic-whisper',
@@ -31,7 +32,8 @@ export const adventurerSectionCards = {
       details: 'Using the mobile device as a physical lens to reveal hidden 3D data layers on a desktop screen. Built on the WebXR and Device Orientation APIs.',
       location: 'The Spatial Frontier',
       date: 'Epoch 2025',
-      status: 'in-progress'
+      status: 'in-progress',
+      backgroundImage: '/bg/haptic-whisper.png',
     },
     {
       id: 'bio-sync',
@@ -40,7 +42,8 @@ export const adventurerSectionCards = {
       details: 'Uses computer vision to detect reader fatigue and automatically adjusts font properties to maintain high cognitive accessibility.',
       location: 'The Empathy Engine',
       date: 'Recent Discovery',
-      status: 'concept'
+      status: 'concept',
+      backgroundImage: '/bg/bio-sync.png',
     },
     {
       id: 'liquid-prompt',
@@ -49,7 +52,8 @@ export const adventurerSectionCards = {
       details: 'Explores the future of interfaces where components are not static, but generated in real-time by LLMs to match the user context and aesthetic preference.',
       location: 'The Morphing Plains',
       date: 'Estimated 2026',
-      status: 'concept'
+      status: 'concept',
+      backgroundImage: '/bg/liquid-prompt.png',
     },
     {
       id: 'echo-location',
@@ -58,7 +62,8 @@ export const adventurerSectionCards = {
       details: 'Uses WebSockets and Three.js to render real-time visitor cursor trails, turning the portfolio into a living, breathing social map.',
       location: 'The Ghost Peaks',
       date: 'Epoch 2025',
-      status: 'in-progress'
+      status: 'in-progress',
+      backgroundImage: '/bg/echo-location.png',
     },
     {
       id: 'cognitive-hud',
@@ -67,7 +72,8 @@ export const adventurerSectionCards = {
       details: 'A "Calm Tech" experiment using the Audio Context API to navigate digital spaces through sound frequency and haptic feedback rather than visual cues.',
       location: 'The Silent Valley',
       date: 'Discovery Pending',
-      status: 'concept'
+      status: 'concept',
+      backgroundImage: '/bg/cognitive-hud.png',
     }
   ],
 
@@ -154,7 +160,7 @@ export const adventurerSectionCards = {
       status: 'completed' as const,
       sourceLink: 'https://github.com/DiptarajSinha/neural-dream',
       link: 'https://neural-dream.vercel.app/',
-      backgroundImage: '/bg/neural-dream.jpg',
+      backgroundImage: '/bg/neural-dream.png',
       location: 'The Ethereal Node',
       date: 'Estimated 2024',
     },
@@ -169,6 +175,7 @@ export const adventurerSectionCards = {
       link: 'https://quantum-ui-flame.vercel.app/',
       location: 'Observation Deck 7',
       date: 'Conceptual Epoch',
+      backgroundImage: '/bg/quantum-ui.png',
     },
     {
       id: 'memory-palace',
@@ -181,6 +188,7 @@ export const adventurerSectionCards = {
       link: 'https://digital-memory-palace.vercel.app/',
       location: 'The Inner Sanctum',
       date: 'Found in 2024',
+      backgroundImage: '/bg/memory-palace.png',
     },
     {
       id: 'liquid-interface',
@@ -192,7 +200,7 @@ export const adventurerSectionCards = {
       date: 'Discovery 2024',
       sourceLink: 'https://github.com/DiptarajSinha/liquid-ui',
       link: 'https://liquid-interface.netlify.app/',
-      backgroundImage: '/bg/liquid-ui.jpg',
+      backgroundImage: '/bg/liquid-ui.png',
       status: 'completed' as const,
     },
     {
@@ -206,6 +214,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/predictive-interface',
       link: 'https://predictive-ui.netlify.app/',
       status: 'completed' as const,
+      backgroundImage: '/bg/predictive-ui.png',
     },
     {
       id: 'emotion-responsive-ui',
@@ -217,6 +226,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/emotion-flix',
       link: 'https://emotion-flix.vercel.app/',
       status: 'completed' as const,
+      backgroundImage : '/bg/emotion-ui.png'
     },
   ],
 
@@ -232,6 +242,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/developer-dashboard',
       link: 'https://developer-dashboard-three-gamma.vercel.app/',
       status: 'completed' as const,
+      backgroundImage: '/bg/dev-dashboard.png',
     },
     {
       id: 'code-snippet-manager',
@@ -243,6 +254,7 @@ export const adventurerSectionCards = {
       date: 'Completed Expedition',
       sourceLink: 'https://github.com/DiptarajSinha',
       status: 'in-progress' as const,
+      backgroundImage: '/bg/snippet-manager.png',
     },
     {
       id: 'automated-screenshots',
@@ -254,6 +266,7 @@ export const adventurerSectionCards = {
       date: 'Artifact Salvaged',
       sourceLink: 'https://github.com/DiptarajSinha',
       status: 'in-progress' as const,
+      backgroundImage: '/bg/screenshot-tool.png',
     },
   ],
 
@@ -268,7 +281,7 @@ export const adventurerSectionCards = {
       date: 'Past Discovery',
       sourceLink: 'https://github.com/DiptarajSinha/reverse-scroll-timeline',
       link: 'https://reverse-scroll-timeline.vercel.app/',
-      backgroundImage: '/bg/reverse-scroll.jpg',
+      backgroundImage: '/bg/reverse-scroll.png',
       status: 'completed' as const,
     },
     {
@@ -282,6 +295,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/VoiceFlix',
       link: 'https://voice-flix.vercel.app/',
       status: 'completed' as const,
+      backgroundImage: '/bg/voice-ui.png',
     },
     {
       id: 'gravity-ui',
@@ -294,6 +308,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/heavy-pixels',
       link: 'https://heavy-pixels.netlify.app/',
       status: 'completed' as const,
+      backgroundImage: '/bg/gravity-ui.png',
     },
   ],
 };

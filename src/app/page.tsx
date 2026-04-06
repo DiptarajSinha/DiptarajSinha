@@ -774,6 +774,7 @@ export default function HomePage() {
                       description="A collection of raw ideas and works-in-progress. These are the sketches in my notebook—some might become masterpieces, others are just for practice."
                       items={adventurerSectionCards.unfinished}
                       onItemClick={openAdventurerItem}
+                      hideCardImage={true}
                     />
 
                     <AdventurerCarousel
@@ -814,6 +815,7 @@ export default function HomePage() {
                       description="This is where I explore speculative ideas and conceptual prototypes. What if a UI was made of liquid? What if a button could predict your next move? Let's find out."
                       items={adventurerSectionCards.playground}
                       onItemClick={openAdventurerItem}
+                      hideCardImage={true}
                     />
 
                     <AdventurerCarousel
@@ -822,6 +824,7 @@ export default function HomePage() {
                       description="Every explorer needs custom gear. These are the small utilities, scripts, and personal apps I've built to streamline my own workflow and solve my own problems."
                       items={adventurerSectionCards.tools}
                       onItemClick={setSelectedAdventurerItem}
+                      hideCardImage={true}
                     />
 
                     <AdventurerCarousel
@@ -830,6 +833,7 @@ export default function HomePage() {
                       description="Breaking the rules to see what happens. A collection of unconventional, strange, and sometimes impractical user interface experiments. Enter at your own risk!"
                       items={adventurerSectionCards.weirdUX}
                       onItemClick={setSelectedAdventurerItem}
+                      hideCardImage={true}
                     />
 
                     {/* NEW: Adventurer Games Section */}
@@ -853,6 +857,7 @@ export default function HomePage() {
                             setSelectedGame(game);
                             setIsGameModalOpen(true);
                           }}
+                          hideCardImage={true}
                         />
                       </div>
                     </AnimatedSection>
