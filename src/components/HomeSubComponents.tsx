@@ -25,15 +25,52 @@ export const SkillCard = ({ name, icon, bg }: { name: string, icon: React.ReactN
 
 // --- ADVENTURER COMPONENTS ---
 
+// --- Card Component for better local state management ---
+const AdventurerCard = ({ item, index, onItemClick, hideCardImage }: { item: any, index: number, onItemClick: (item: any) => void, hideCardImage?: boolean }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.25, zIndex: 40 }}
+      onClick={() => onItemClick(item)}
+      className={`min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-white/10 bg-clip-padding hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 cursor-pointer bg-zinc-900 flex-shrink-0`}
+    >
+      {item.backgroundImage && !hideCardImage && (
+        <>
+          {!isLoaded && <div className="absolute inset-0 skeleton-shimmer z-[1]" />}
+          <Image
+            src={item.backgroundImage}
+            alt={item.title}
+            fill
+            className={`object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            priority={index < 4}
+            onLoad={() => setIsLoaded(true)}
+          />
+        </>
+      )}
+      
+      <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-center z-10">
+        <h3 className="text-white text-lg font-semibold mb-2">{item.title}</h3>
+        <p className="text-gray-300 text-sm line-clamp-2">{item.description}</p>
+        
+        {item.status && (
+          <div 
+            className={`absolute top-2 right-2 w-3 h-3 rounded-full ${
+              item.status === 'completed' ? 'bg-green-500' :
+              item.status === 'in-progress' ? 'bg-yellow-500' :
+              'bg-blue-500'
+            }`}
+            title={item.status === 'in-progress' ? 'In Progress' : 
+                   item.status === 'completed' ? 'Completed' : 'Concept'}
+          />
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
 export const AdventurerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hideCardImage }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Preload all background images for this carousel
-  const bgUrls = useMemo(() => 
-    items.filter((item: any) => item.backgroundImage && !hideCardImage).map((item: any) => item.backgroundImage),
-    [items, hideCardImage]
-  );
-  const loadedImages = useImagePreloader(bgUrls);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
@@ -59,46 +96,14 @@ export const AdventurerCarousel: React.FC<any> = ({ id, title, description, item
             ref={scrollRef}
             className="relative z-0 flex space-x-6 overflow-x-scroll no-scrollbar px-12 py-4"
           >
-            {items.map((item: any) => (
-              <motion.div
-                key={item.id}
-                whileHover={{ scale: 1.25, zIndex: 40 }}
-                onClick={() => onItemClick(item)}
-                className={`min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-white/10 bg-clip-padding hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 cursor-pointer`}
-                style={{
-                  backgroundColor: (!item.backgroundImage || hideCardImage) ? '#18181b' : 'transparent',
-                }}
-              >
-                {/* Skeleton shimmer for loading bg images */}
-                {item.backgroundImage && !hideCardImage && !loadedImages.has(item.backgroundImage) && (
-                  <div className="absolute inset-0 skeleton-shimmer z-[1]" />
-                )}
-                {item.backgroundImage && !hideCardImage && (
-                  <div
-                    className={`absolute inset-0 transition-opacity duration-700 ${loadedImages.has(item.backgroundImage) ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                      backgroundImage: `url(${item.backgroundImage})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                )}
-                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-center">
-                  <h3 className="text-white text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-300 text-sm line-clamp-2">{item.description}</p>
-                  {item.status && (
-                  <div 
-                    className={`absolute top-2 right-2 w-3 h-3 rounded-full ${
-                      item.status === 'completed' ? 'bg-green-500' :
-                      item.status === 'in-progress' ? 'bg-yellow-500' :
-                      'bg-blue-500'
-                    }`}
-                    title={item.status === 'in-progress' ? 'In Progress' : 
-                           item.status === 'completed' ? 'Completed' : 'Concept'}
-                  />
-                )}
-                </div>
-              </motion.div>
+            {items.map((item: any, index: number) => (
+              <AdventurerCard 
+                key={item.id} 
+                item={item} 
+                index={index} 
+                onItemClick={onItemClick} 
+                hideCardImage={hideCardImage} 
+              />
             ))}
           </div>
 
@@ -341,15 +346,64 @@ export const TypingTerminal: React.FC<any> = ({ onComplete }) => {
   );
 };
 
+const StalkerCard = ({ item, index, onItemClick, hoverEffect, getHoverEffectClasses }: { item: any, index: number, onItemClick: (item: any) => void, hoverEffect: string, getHoverEffectClasses: (effect: string) => string }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05, zIndex: 40 }}
+      onClick={() => onItemClick(item)}
+      className={`min-w-[240px] max-w-[240px] h-[240px] rounded-lg overflow-hidden relative border-2 border-red-800/50 transition-all duration-300 cursor-pointer bg-zinc-900 flex-shrink-0 ${getHoverEffectClasses(hoverEffect)}`}
+    >
+      {item.backgroundImage && (
+        <>
+          {!isLoaded && <div className="absolute inset-0 skeleton-shimmer z-[1]" />}
+          <Image
+            src={item.backgroundImage}
+            alt={item.title}
+            fill
+            className={`object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            priority={index < 4}
+            onLoad={() => setIsLoaded(true)}
+          />
+        </>
+      )}
+      
+      <div className="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 z-10">
+        <div className="flex justify-between items-start mb-3">
+          <span className={`px-3 py-1 rounded text-sm font-stalker border ${
+            item.accessLevel === 'top-secret' ? 'bg-red-900/50 text-red-200 border-red-500' :
+            item.accessLevel === 'restricted' ? 'bg-yellow-900/50 text-yellow-200 border-yellow-500' :
+            'bg-green-900/50 text-green-200 border-green-500'
+          }`}>
+            {item.accessLevel?.toUpperCase() || 'PUBLIC'}
+          </span>
+          {item.threatLevel && (
+            <div className={`w-3 h-3 rounded-full ${
+              item.threatLevel === 'critical' ? 'bg-red-500 animate-pulse' :
+              item.threatLevel === 'high' ? 'bg-orange-500' :
+              item.threatLevel === 'medium' ? 'bg-yellow-500' :
+              'bg-green-500'
+            }`} />
+          )}
+        </div>
+        
+        <div className="flex-1 flex flex-col justify-center text-center">
+          <h3 className="text-white text-2xl font-semibold mb-3 font-stalker tracking-wide leading-tight">{item.title}</h3>
+          <p className="text-gray-300 text-lg leading-relaxed font-stalker">{item.description}</p>
+        </div>
+        
+        <div className="flex justify-between items-end text-sm text-gray-500 font-stalker mt-3">
+          <span>{item.status?.toUpperCase()}</span>
+          <span>{item.lastAccessed}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hoverEffect }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Preload all background images for this carousel
-  const bgUrls = useMemo(() => 
-    items.filter((item: any) => item.backgroundImage).map((item: any) => item.backgroundImage),
-    [items]
-  );
-  const loadedImages = useImagePreloader(bgUrls);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
@@ -394,58 +448,15 @@ export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, 
             ref={scrollRef}
             className="relative z-0 flex space-x-6 overflow-x-scroll no-scrollbar px-12 py-4"
           >
-            {items.map((item: any) => (
-              <motion.div
-                key={item.id}
-                whileHover={{ scale: 1.05, zIndex: 40 }}
-                onClick={() => onItemClick(item)}
-                // UPDATED HEIGHT
-                className={`min-w-[240px] max-w-[240px] h-[240px] rounded-lg overflow-hidden relative border-2 border-red-800/50 transition-all duration-300 cursor-pointer bg-zinc-900 flex-shrink-0 ${getHoverEffectClasses(hoverEffect)}`}
-              >
-                {/* Skeleton shimmer for loading bg images */}
-                {item.backgroundImage && !loadedImages.has(item.backgroundImage) && (
-                  <div className="absolute inset-0 skeleton-shimmer z-[1]" />
-                )}
-                {item.backgroundImage && (
-                  <div
-                    className={`absolute inset-0 transition-opacity duration-700 ${loadedImages.has(item.backgroundImage) ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                      backgroundImage: `url(${item.backgroundImage})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                )}
-                <div className="absolute inset-0 bg-black/80 flex flex-col justify-between p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <span className={`px-3 py-1 rounded text-sm font-stalker border ${
-                      item.accessLevel === 'top-secret' ? 'bg-red-900/50 text-red-200 border-red-500' :
-                      item.accessLevel === 'restricted' ? 'bg-yellow-900/50 text-yellow-200 border-yellow-500' :
-                      'bg-green-900/50 text-green-200 border-green-500'
-                    }`}>
-                      {item.accessLevel?.toUpperCase() || 'PUBLIC'}
-                    </span>
-                    {item.threatLevel && (
-                      <div className={`w-3 h-3 rounded-full ${
-                        item.threatLevel === 'critical' ? 'bg-red-500 animate-pulse' :
-                        item.threatLevel === 'high' ? 'bg-orange-500' :
-                        item.threatLevel === 'medium' ? 'bg-yellow-500' :
-                        'bg-green-500'
-                      }`} />
-                    )}
-                  </div>
-                  
-                  <div className="flex-1 flex flex-col justify-center text-center">
-                    <h3 className="text-white text-2xl font-semibold mb-3 font-stalker tracking-wide leading-tight">{item.title}</h3>
-                    <p className="text-gray-300 text-lg leading-relaxed font-stalker">{item.description}</p>
-                  </div>
-                  
-                  <div className="flex justify-between items-end text-sm text-gray-500 font-stalker mt-3">
-                    <span>{item.status?.toUpperCase()}</span>
-                    <span>{item.lastAccessed}</span>
-                  </div>
-                </div>
-              </motion.div>
+            {items.map((item: any, index: number) => (
+              <StalkerCard 
+                key={item.id} 
+                item={item} 
+                index={index} 
+                onItemClick={onItemClick} 
+                hoverEffect={hoverEffect} 
+                getHoverEffectClasses={getHoverEffectClasses} 
+              />
             ))}
           </div>
 
