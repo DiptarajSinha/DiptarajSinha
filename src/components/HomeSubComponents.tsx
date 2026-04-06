@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 // --- Types ---
 import { AdventurerItem } from '@/data/adventurerData';
@@ -26,6 +27,13 @@ export const SkillCard = ({ name, icon, bg }: { name: string, icon: React.ReactN
 
 export const AdventurerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hideCardImage }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Preload all background images for this carousel
+  const bgUrls = useMemo(() => 
+    items.filter((item: any) => item.backgroundImage && !hideCardImage).map((item: any) => item.backgroundImage),
+    [items, hideCardImage]
+  );
+  const loadedImages = useImagePreloader(bgUrls);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
@@ -58,12 +66,23 @@ export const AdventurerCarousel: React.FC<any> = ({ id, title, description, item
                 onClick={() => onItemClick(item)}
                 className={`min-w-[200px] h-[120px] rounded-lg overflow-hidden relative border-4 border-white/10 bg-clip-padding hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa] transition-transform duration-300 cursor-pointer`}
                 style={{
-                  backgroundImage: (item.backgroundImage && !hideCardImage) ? `url(${item.backgroundImage})` : 'none',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
                   backgroundColor: (!item.backgroundImage || hideCardImage) ? '#18181b' : 'transparent',
                 }}
               >
+                {/* Skeleton shimmer for loading bg images */}
+                {item.backgroundImage && !hideCardImage && !loadedImages.has(item.backgroundImage) && (
+                  <div className="absolute inset-0 skeleton-shimmer z-[1]" />
+                )}
+                {item.backgroundImage && !hideCardImage && (
+                  <div
+                    className={`absolute inset-0 transition-opacity duration-700 ${loadedImages.has(item.backgroundImage) ? 'opacity-100' : 'opacity-0'}`}
+                    style={{
+                      backgroundImage: `url(${item.backgroundImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                )}
                 <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-center">
                   <h3 className="text-white text-lg font-semibold mb-2">{item.title}</h3>
                   <p className="text-gray-300 text-sm line-clamp-2">{item.description}</p>
@@ -325,6 +344,13 @@ export const TypingTerminal: React.FC<any> = ({ onComplete }) => {
 export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, onItemClick, hoverEffect }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Preload all background images for this carousel
+  const bgUrls = useMemo(() => 
+    items.filter((item: any) => item.backgroundImage).map((item: any) => item.backgroundImage),
+    [items]
+  );
+  const loadedImages = useImagePreloader(bgUrls);
+
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
     const amount = direction === 'left' ? -320 : 320; 
@@ -375,12 +401,21 @@ export const StalkerCarousel: React.FC<any> = ({ id, title, description, items, 
                 onClick={() => onItemClick(item)}
                 // UPDATED HEIGHT
                 className={`min-w-[240px] max-w-[240px] h-[240px] rounded-lg overflow-hidden relative border-2 border-red-800/50 transition-all duration-300 cursor-pointer bg-zinc-900 flex-shrink-0 ${getHoverEffectClasses(hoverEffect)}`}
-                style={{
-                  backgroundImage: item.backgroundImage ? `url(${item.backgroundImage})` : 'none',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
               >
+                {/* Skeleton shimmer for loading bg images */}
+                {item.backgroundImage && !loadedImages.has(item.backgroundImage) && (
+                  <div className="absolute inset-0 skeleton-shimmer z-[1]" />
+                )}
+                {item.backgroundImage && (
+                  <div
+                    className={`absolute inset-0 transition-opacity duration-700 ${loadedImages.has(item.backgroundImage) ? 'opacity-100' : 'opacity-0'}`}
+                    style={{
+                      backgroundImage: `url(${item.backgroundImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                )}
                 <div className="absolute inset-0 bg-black/80 flex flex-col justify-between p-6">
                   <div className="flex justify-between items-start mb-3">
                     <span className={`px-3 py-1 rounded text-sm font-stalker border ${

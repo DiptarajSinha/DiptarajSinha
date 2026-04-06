@@ -71,3 +71,28 @@ html {
 .animate-snake-border {
   animation: snake-rotate 3s linear infinite;
 }
+
+/* --- SKELETON SHIMMER --- */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    110deg,
+    #18181b 0%,
+    #18181b 30%,
+    #27272a 45%,
+    #3f3f46 50%,
+    #27272a 55%,
+    #18181b 70%,
+    #18181b 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}

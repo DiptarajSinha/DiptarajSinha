@@ -1,9 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// Hooks
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 // Icons
 import { FaChevronLeft, FaChevronRight, FaChevronDown } from 'react-icons/fa';
@@ -209,6 +212,22 @@ export default function HomePage() {
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
+  // --- COLLECT ALL BG IMAGE URLS FOR PRELOADING ---
+  const allBgUrls = useMemo(() => {
+    const urls: string[] = [];
+    // Top picks backgrounds
+    if (role && topPickBackgrounds[role]) {
+      urls.push(...topPickBackgrounds[role]);
+    }
+    // Recruiter project backgrounds
+    recruiterProjects.forEach(p => { if (p.backgroundImage) urls.push(p.backgroundImage); });
+    // Adventurer project backgrounds
+    adventurerProjects.forEach(p => { if (p.backgroundImage) urls.push(p.backgroundImage); });
+    return urls;
+  }, [role]);
+
+  const loadedImages = useImagePreloader(allBgUrls);
+
   const handleScrollToSection = (sectionId: string) => {
       const section = document.getElementById(sectionId);
       if (section) {
@@ -348,8 +367,12 @@ export default function HomePage() {
                         </div>
                       )}
 
+                      {/* Skeleton shimmer until image loads */}
+                      {!loadedImages.has(bg) && (
+                        <div className="absolute inset-0 skeleton-shimmer z-[1]" />
+                      )}
                       <div 
-                          className={`absolute inset-0 transition-all duration-500 ${!isStalker && isDesktop ? 'blur-md group-hover:blur-none' : ''}`}
+                          className={`absolute inset-0 transition-all duration-700 ${!isStalker && isDesktop ? 'blur-md group-hover:blur-none' : ''} ${loadedImages.has(bg) ? 'opacity-100' : 'opacity-0'}`}
                           style={{
                               backgroundImage: `url(${bg})`,
                               backgroundSize: '100% 100%',
@@ -421,12 +444,19 @@ export default function HomePage() {
               className={`relative min-w-[280px] md:min-w-[320px] h-[220px] rounded-xl p-5 border-4 border-white/10 bg-clip-padding ${
                 role === 'Recruiter' ? 'hover:border-red-600 hover:drop-shadow-[0_0_25px_#ff0000aa]' : 'hover:border-white hover:drop-shadow-[0_0_25px_#ffffffaa]'
               } transition-all duration-300 flex flex-col justify-between overflow-hidden`}
-              style={{
-                backgroundImage: `url(${project.backgroundImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
             >
+              {/* Skeleton shimmer until project bg loads */}
+              {project.backgroundImage && !loadedImages.has(project.backgroundImage) && (
+                <div className="absolute inset-0 skeleton-shimmer z-0" />
+              )}
+              <div
+                className={`absolute inset-0 transition-opacity duration-700 ${project.backgroundImage && loadedImages.has(project.backgroundImage) ? 'opacity-100' : 'opacity-0'}`}
+                style={{
+                  backgroundImage: project.backgroundImage ? `url(${project.backgroundImage})` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
               <div className="absolute inset-0 bg-black/70 z-0"></div>
               <div className="relative z-10 flex flex-col justify-between h-full">
                   <div>
@@ -611,8 +641,29 @@ export default function HomePage() {
                 
                 <AnimatedSection>
                     <div className="scroll-mt-28" id="experience">
-                        <h2 className="text-3xl font-bold mb-6 text-left">Experience</h2>
+                      <h2 className="text-3xl font-bold mb-6 text-left">Experience</h2>
                         <div className="space-y-8">
+                            <motion.div whileHover={{ scale: 1.02 }} className="bg-zinc-900 border border-zinc-700 p-6 rounded-xl shadow-lg transition-transform duration-300">
+                              <h3 className="text-xl font-bold text-white mb-2">AI Annotator Intern - Generative AI @ RT Network Solutions</h3>
+                              <p className="text-sm text-zinc-400 mb-1">January 2026 - March 2026</p>
+                              <p className="text-gray-400 text-sm mb-3">
+                                  - Worked as an AI Annotator, delivering precise labeling to support training and evaluation of generative AI models.
+                              </p>
+                              <p className="text-gray-400 text-sm mb-3">
+                                  - Applied AI data annotation workflows to curate, validate, and optimize datasets for improved model accuracy and performance.
+                              </p>
+                              <a 
+                                  href="https://drive.google.com/file/d/1ezEfv501Ti7mTDWdcLdSHKUKtep4wC6_/view?usp=sharing"
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-200"
+                              >
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                  </svg>
+                                  View Certificate
+                              </a>
+                            </motion.div>
                             <motion.div whileHover={{ scale: 1.02 }} className="bg-zinc-900 border border-zinc-700 p-6 rounded-xl shadow-lg transition-transform duration-300">
                               <h3 className="text-xl font-bold text-white mb-2">Generative AI Developer Intern @ AI WALLAH</h3>
                               <p className="text-sm text-zinc-400 mb-1">June 2025 - July 2025</p>
@@ -635,14 +686,25 @@ export default function HomePage() {
                               </a>
                             </motion.div>
                             <motion.div whileHover={{ scale: 1.02 }} className="bg-zinc-900 border border-zinc-700 p-6 rounded-xl shadow-lg transition-transform duration-300">
-                                <h3 className="text-xl font-bold text-white mb-2">Cybersecurity (AWS Cloud Intern) @ Employability.life</h3>
-                                <p className="text-sm text-zinc-400 mb-1">April 2025 - June 2025</p>
-                                <p className="text-gray-400 text-sm mb-3">
-                                    - Developed and executed test cases for EC2, S3, and Lambda-based cloud workflows.
-                                </p>
-                                <p className="text-gray-400 text-sm">
-                                    - Simulated IAM policies to verify user access controls and resource protection.
-                                </p>
+                              <h3 className="text-xl font-bold text-white mb-2">Cybersecurity (AWS Cloud Intern) @ Employability.life</h3>
+                              <p className="text-sm text-zinc-400 mb-1">April 2025 - May 2025</p>
+                              <p className="text-gray-400 text-sm mb-3">
+                                  - Developed and executed test cases for EC2, S3, and Lambda-based cloud workflows.
+                              </p>
+                              <p className="text-gray-400 text-sm mb-3">
+                                  - Simulated IAM policies to verify user access controls and resource protection.
+                              </p>
+                              <a 
+                                  href="https://drive.google.com/file/d/1pyECi3c_PNsHwRHAfLTRV2cl3VCN7ve1/view?usp=sharing" 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-200"
+                              >
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                  </svg>
+                                  View Certificate
+                              </a>
                             </motion.div>
                         </div>
                     </div>
