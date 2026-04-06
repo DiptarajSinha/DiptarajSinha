@@ -175,6 +175,7 @@ export const adventurerSectionCards = {
       link: 'https://quantum-ui-flame.vercel.app/',
       location: 'Observation Deck 7',
       date: 'Conceptual Epoch',
+      backgroundImage: '/bg/quantum-ui.png',
     },
     {
       id: 'memory-palace',
@@ -187,6 +188,7 @@ export const adventurerSectionCards = {
       link: 'https://digital-memory-palace.vercel.app/',
       location: 'The Inner Sanctum',
       date: 'Found in 2024',
+      backgroundImage: '/bg/memory-palace.png',
     },
     {
       id: 'liquid-interface',
@@ -198,6 +200,7 @@ export const adventurerSectionCards = {
       date: 'Discovery 2024',
       sourceLink: 'https://github.com/DiptarajSinha/liquid-ui',
       link: 'https://liquid-interface.netlify.app/',
+      backgroundImage: '/bg/liquid-ui.png',
       status: 'completed' as const,
     },
     {
@@ -211,6 +214,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/predictive-interface',
       link: 'https://predictive-ui.netlify.app/',
       status: 'completed' as const,
+      backgroundImage: '/bg/predictive-ui.png',
     },
     {
       id: 'emotion-responsive-ui',
