@@ -212,15 +212,17 @@ export default function HomePage() {
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // --- COLLECT ONLY CRITICAL BG IMAGE URLS FOR PRELOADING ---
+  // --- COLLECT ALL BG IMAGE URLS FOR PRELOADING ---
   const allBgUrls = useMemo(() => {
     const urls: string[] = [];
-    // Top picks backgrounds (Hero section)
+    // Top picks backgrounds
     if (role && topPickBackgrounds[role]) {
       urls.push(...topPickBackgrounds[role]);
     }
-    // We NO LONGER preload all project backgrounds here to prevent bottleneck.
-    // next/image will handle them on-demand as the user scrolls.
+    // Recruiter project backgrounds
+    recruiterProjects.forEach(p => { if (p.backgroundImage) urls.push(p.backgroundImage); });
+    // Adventurer project backgrounds
+    adventurerProjects.forEach(p => { if (p.backgroundImage) urls.push(p.backgroundImage); });
     return urls;
   }, [role]);
 
@@ -835,7 +837,6 @@ export default function HomePage() {
                       items={adventurerSectionCards.unfinished}
                       onItemClick={openAdventurerItem}
                       hideCardImage={true}
-                      isPriority={true}
                     />
 
                     <AdventurerCarousel
@@ -1114,7 +1115,6 @@ export default function HomePage() {
                   items={stalkerSectionCards.suspicious}
                   onItemClick={setSelectedStalkerItem}
                   hoverEffect="glitch"
-                  isPriority={true}
                 />
 
                 {/* Logs */}

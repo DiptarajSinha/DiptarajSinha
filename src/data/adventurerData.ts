@@ -226,7 +226,7 @@ export const adventurerSectionCards = {
       sourceLink: 'https://github.com/DiptarajSinha/emotion-flix',
       link: 'https://emotion-flix.vercel.app/',
       status: 'completed' as const,
-      backgroundImage : '/bg/emotion-ui.png'
+      backgroundImage: '/bg/emotion-ui.png'
     },
   ],
 
